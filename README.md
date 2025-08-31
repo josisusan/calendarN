@@ -113,6 +113,11 @@ calendarN countdown delete -n 'My Birthday'
 
   Gives the converted date for the english to nepali date
 
+### View the api server spec
+  ```bash
+  make swagger
+  ```
+
 ### Requirement
 
 - Go 1.24+

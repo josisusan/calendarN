@@ -1,0 +1,98 @@
+# The openapi version string. For 3.1.0, this MUST be '3.1.0'.
+openapi: 3.1.0
+# The info object provides metadata about the API.
+info:
+  title: Simple API
+  # A short summary of the API. New in OpenAPI 3.1.0.
+  summary: A simple API to facilitate calendar service.
+  description: |
+    Calendar service
+  version: 1.0.0
+
+# An array of Server Objects, which provide connectivity information to a target server.
+servers:
+  - url: https://localhost:5001/calendarN
+    description: Local server
+
+# Tags are used for logical grouping of operations.
+tags:
+  - name: Calendar
+    description: Operations related to CalendarN
+
+# The available paths and operations for the API.
+paths:
+  /calendarN/today:
+    get:
+      summary: Returns today's calendar for both eng and nepali
+      description: Returns today's calendar for both eng and nepali
+      operationId: calendarToday
+      tags:
+        - Calendar
+      responses:
+        "200":
+          description: calendar response
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CalendarResponse"
+
+# Reusable components that can be referenced throughout the specification.
+components:
+  schemas:
+    CalendarResponse:
+      type: object
+      properties:
+        nepali:
+          type: object
+          properties:
+            title:
+              type: string
+              example: "नेपाली आज"
+            today:
+              type: string
+              example: "आइतवार, १५ भदौ, २०८२|"
+            progressTitle:
+              type: string
+              example: "यो वर्षको दिन"
+            progressCount:
+              type: string
+              example: "१४०"
+        english:
+          type: object
+          properties:
+            title:
+              type: string
+              example: "English Today"
+            today:
+              type: string
+              example: "Sunday,31 August,2025"
+            progressTitle:
+              type: string
+              example: "Day of the year"
+            progressCount:
+              type: string
+              example: "242"
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: An error code.
+        message:
+          type: string
+          description: A human-readable error message.
+      required:
+        - code
+        - message
+
+  securitySchemes:
+    # A common security scheme: API Key in the header
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API Key for authentication.
+
+security:
+  - ApiKeyAuth: []
