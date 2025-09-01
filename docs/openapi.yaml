@@ -35,8 +35,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CalendarResponse"
-
-# Reusable components that can be referenced throughout the specification.
 components:
   schemas:
     CalendarResponse:
@@ -44,34 +42,42 @@ components:
       properties:
         nepali:
           type: object
-          properties:
-            title:
-              type: string
-              example: "नेपाली आज"
-            today:
-              type: string
-              example: "आइतवार, १५ भदौ, २०८२|"
-            progressTitle:
-              type: string
-              example: "यो वर्षको दिन"
-            progressCount:
-              type: string
-              example: "१४०"
+          allOf:
+            - $ref: "#/components/schemas/DateResponse"
+            - type: object
+              properties:
+                year_english:
+                  type: integer
+                month_english:
+                  type: integer
+                day_english:
+                  type: integer
+                week_day_english:
+                  type: integer
         english:
           type: object
-          properties:
-            title:
-              type: string
-              example: "English Today"
-            today:
-              type: string
-              example: "Sunday,31 August,2025"
-            progressTitle:
-              type: string
-              example: "Day of the year"
-            progressCount:
-              type: string
-              example: "242"
+          allOf:
+            - $ref: "#/components/schemas/DateResponse"
+            - type: object
+              properties:
+                month_string:
+                  type: string
+                progress:
+                  type: number
+                  format: float
+    DateResponse:
+      type: object
+      properties:
+        year:
+          type: integer
+        month:
+          type: integer
+        day:
+          type: integer
+        full_date:
+          type: string
+        year_days:
+          type: integer
     Error:
       type: object
       properties:
