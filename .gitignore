@@ -17,3 +17,4 @@ calendarN
 .idea
 .vscode
 .env
+*/*_gen.go

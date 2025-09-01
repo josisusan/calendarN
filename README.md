@@ -122,6 +122,12 @@ calendarN countdown delete -n 'My Birthday'
 
 - Go 1.24+
 
+### Development
+- Run generate command:
+```bash
+go generate ./...
+```
+
 ### Contributing
 
 - For new feature/bug create an issue

@@ -30,6 +30,7 @@ import (
 //go:embed .version
 var version string
 
+//go:generate go tool ogen --target api --clean docs/openapi.yaml
 func main() {
 	cmd.Execute(version)
 }
