@@ -9,8 +9,6 @@ import (
 	"github.com/samit22/calendarN/api"
 )
 
-
-var staticKey = os.Getenv("API_KEY")
 type CalendarService struct {
 }
 
@@ -22,18 +20,21 @@ func (c CalendarService) CalendarToday(ctx context.Context) (*api.CalendarRespon
 }
 
 type APISec struct {
+	Token string
 }
 
 func (sec APISec) HandleApiKeyAuth(ctx context.Context, operationName api.OperationName, t api.ApiKeyAuth) (context.Context, error) {
-	if t.APIKey == staticKey {
+	if t.APIKey == sec.Token {
 		return ctx, nil
 	}
 	return nil, fmt.Errorf("Security breached")
 }
 
-func Run(port int) {
+func Run(port int, token string) {
 	service := CalendarService{}
-	secHandler := APISec{}
+	secHandler := APISec{
+		Token: token,
+	}
 	srv, err := api.NewServer(service, secHandler)
 	if err != nil {
 		fmt.Println("Error")

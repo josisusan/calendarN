@@ -6,6 +6,7 @@ import (
 )
 
 var port int
+var secret string
 var serverCmd = &cobra.Command{
 	Use:     "server",
 	Short:   "run server at port 5001 (default)",
@@ -14,11 +15,15 @@ var serverCmd = &cobra.Command{
 		if port == 0 {
 			port = 5001
 		}
-		apiserver.Run(port)
+		if secret == "" {
+			secret = "secret"
+		}
+		apiserver.Run(port, secret)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(serverCmd)
 	serverCmd.Flags().IntVarP(&port, "port", "p", port, "port")
+	serverCmd.Flags().StringVarP(&secret, "token", "t", secret, "static api key")
 }
